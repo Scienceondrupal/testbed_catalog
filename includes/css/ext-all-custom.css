@@ -1,0 +1,48 @@
+.detailtext{
+   padding:20px 10px 5px 10px;
+   font:13px Helvetica,Arial,sans-serif;
+   word-wrap:break-word;
+   width:900px;
+}
+
+.innertab{
+   padding-left:50px;
+}
+strong {
+	font-weight: bolder;
+}
+.center{
+	text-align: center
+}
+
+.ext-el-mask
+{
+color:gray;
+cursor:default;
+opacity:0.6;
+background-color:grey;
+}
+
+.ext-el-mask-msg div {
+background-color: #EEEEEE;
+border-color: #A3BAD9;
+color: #222222;
+font: 1.2em tahoma,arial,helvetica,sans-serif;
+}
+
+.ext-el-mask-msg {
+padding: 10px;
+}
+
+.dottedline {
+  border-top: 1px dotted #f00;
+  color: #fff;
+  background-color: #fff;
+  height: 1px;
+  width:50%;
+}
+
+
+.x-grid3-cell-inner { white-space: normal; }
+
+.x-grid3 table td {padding:0; }

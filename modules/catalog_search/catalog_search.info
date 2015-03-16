@@ -1,0 +1,5 @@
+; $Id$
+name = Catalog Search
+description = Catalog Search
+core = 6.x
+stylesheets[all][] = OpenLayers/theme/default/style.css

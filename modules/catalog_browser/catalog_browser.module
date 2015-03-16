@@ -1,0 +1,132 @@
+<?php
+function catalog_browser_init() {
+    
+}
+
+// Implementation of hook_menu function.
+function catalog_browser_menu() {
+    $items['catalog-browser'] = array(
+        'title' => 'catalog-browser',
+        'page callback' => 'catalog_browser_page_default',
+        'type' => MENU_NORMAL_ITEM,
+        'access arguments' => array('administer catalog_browser'),
+    );
+	
+	$items['testphp'] = array(
+        'title' => 'testphp',
+        'page callback' => 'test_page_default',
+        'type' => MENU_NORMAL_ITEM,
+        'access arguments' => array('administer catalog_browser'),
+    );
+    
+    $items['catalogresponse'] = array(
+    'title' =>'catalogresponse',
+    'page callback' => 'catalog_browser_response',
+    'access arguments' => array('administer catalog_browser'),
+    'type' => MENU_CALLBACK,
+  );
+    
+    return $items;
+}
+
+function catalog_browser_page_default() {
+     return drupal_get_form('catalog_browser_form');
+   }
+   
+   
+function test_page_default() {
+     return drupal_get_form('test_form');
+   }
+   
+function test_form() {	  
+	  $form['ObservationsGrid'] = array(
+           '#type' => 'markup',
+           '#prefix' => '<div id="cswgridObservations"></div>',
+           '#value'=> print $node->project_issue[assigned],
+   );
+   
+    $form['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Create'),
+    );
+    return $form;
+}
+function test_form_submit($form, &$form_state) { 
+	  $nid=615;	  
+	  $node = node_load($nid);
+      drupal_set_message($node->project_issue[assigned]);
+	  $user_fields = user_load($node->project_issue[assigned]);
+	  drupal_set_message($user_fields->mail);	 
+
+	  drupal_mail('project_issue', 'project_issue_update_notification',$user_fields->mail , language_default(), $params = array('username' => 'John Potato'), $from = NULL, $send = TRUE);
+}
+function catalog_browser_response() {
+    
+    if (isset($_POST['isourl'])) {
+        $url = $_POST['isourl'];
+        $data=$_POST['isodata'];
+    } elseif (isset($_GET['isourl'])) {
+        $url = $_GET['isourl'];
+        $data=$_GET['isodata'];
+    } else {
+        $url = '';
+        $data='';
+    }
+    
+    $optional_headers="Content-type: text/xml";   
+    $params = array('http' => array(
+            'method' => 'POST',
+            'content' => $data
+            ));
+    if ($optional_headers !== null) {
+        $params['http']['header'] = $optional_headers;
+    }
+    
+    $ctx = stream_context_create($params);
+     
+    $fp = @fopen($url, 'rb', false, $ctx);  
+    
+    if (!$fp) {
+        throw new Exception("Problem with $url, $php_errormsg");
+    }       
+    $response = @stream_get_contents($fp);    
+    if ($response === false) {
+        throw new Exception("Problem reading data from $url, $php_errormsg");
+    }
+    echo $response;
+}
+
+// Implementation of hook_ form function ( to bring out the layout of the drupal form)
+function catalog_browser_form() {
+   
+
+    $modulepath ='sites/all/modules/testbed_catalog';
+   
+    drupal_add_css($modulepath . '/includes/ext/resources/css/ext-all.css');
+    drupal_add_css($modulepath. '/includes/css/OpenLayers/openlayer_style.css');
+    drupal_add_css($modulepath . '/includes/css/custom_search.css');
+    
+    drupal_add_js($modulepath . '/includes/ext/adapter/ext/ext-base-debug.js', 'module', 'header', FALSE, TRUE, TRUE);
+    drupal_add_js($modulepath . '/includes/ext/ext-all-debug.js', 'module', 'header', FALSE, TRUE, TRUE);  
+    drupal_add_js($modulepath . '/includes/geoext/lib/GeoExt.js', 'module', 'header', FALSE, TRUE, FALSE);
+    drupal_add_js($modulepath. '/includes/geoext/lib/OpenLayers.js','module','header',FALSE,TRUE,FALSE);    
+    drupal_add_js($modulepath . '/includes/js/GridRowExpander.js', 'module', 'header', FALSE, TRUE, FALSE);
+    //drupal_add_js(drupal_get_path('module', 'catalog_browser') . '/MaxHeightGridView.js');
+    drupal_add_js($modulepath . '/modules/catalog_browser/js/get-catalog-browser.js', 'module', 'header', FALSE, TRUE, FALSE);
+
+
+   $form['modelsGrid'] = array(
+            '#type' => 'markup',
+            '#prefix' => '<div id="cswgridModels"></div>',
+            '#value'=> ' ',
+
+    );
+    
+
+    return $form;
+}
+
+function catalog_browser_perm() {
+  return array('administer catalog_browser');
+}
+?>

@@ -1,0 +1,59 @@
+.x-spatialrange{
+    padding:10px 10px 10px 20px;
+}
+.x-search table {
+    border:0;
+    border-collapse:separate;
+}
+
+#mappanel table {   
+    border:0;
+    border-collapse:separate;   
+    width: auto;
+}
+#mappanel table td{
+     border-color: transparent;
+     padding: 0;
+}
+
+.detailtextsmall{
+   padding:0 0 5px 10px; 
+   word-wrap:break-word;
+}
+
+.detailtextlarge{
+   padding:20px 10px 5px 10px;
+   font:13px Helvetica,Arial,sans-serif;
+   word-wrap:break-word;
+   width:900px;
+}
+
+.innertab{
+   padding-left:50px;
+}
+strong {
+	font-weight: bolder;
+}
+.center{
+	text-align: center
+}
+
+.dottedline {
+  border-top: 1px dotted #f00;
+  color: #fff;
+  background-color: #fff;
+  height: 1px;
+  width:50%;
+}
+
+
+.x-grid3-cell-inner { white-space: normal;word-wrap:break-word; }
+
+.x-grid3 table td {padding:0; }
+.x-grid3 table{border: 0}
+.x-grid3 table tbody{border:0;}
+
+.removefieldlabel .x-form-item-label{display:none !important;}
+.removefieldlabel .x-form-element{padding: 0 !important;}
+#searchpanel .x-fieldset-body{overflow:visible;}
+#searchpanel .x-fieldset-bwrap{overflow:visible;}

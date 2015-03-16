@@ -1,0 +1,4 @@
+; $Id$
+name = Catalog Browser
+description = Catalog Browser
+core = 6.x

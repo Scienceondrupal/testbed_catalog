@@ -1,0 +1,4 @@
+; $Id$
+name = Testbed Issues
+description = Testbed Issue List
+core = 6.x
